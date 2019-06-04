@@ -1,6 +1,11 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 
@@ -30,11 +35,13 @@ public final class TcpSender {
      *
      * @return текстовое сообщение.
      */
-    private static String prepareMessage() {
+    private static String prepareMessage() throws IOException {
         /*
-         * TODO Реализовать метод prepareMessage класса TcpSender
+         * Реализован метод prepareMessage класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Message to send: >");
+        return reader.readLine();
     }
 
     /**
@@ -44,9 +51,10 @@ public final class TcpSender {
      */
     private static SocketAddress prepareAddress() {
         /*
-         * TODO Реализовать метод prepareAddress класса TcpSender
+         * Реализован метод prepareAddress класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        return new InetSocketAddress("127.0.0.1", 8080);
+        
     }
 
     /**
@@ -61,9 +69,11 @@ public final class TcpSender {
      */
     private static Socket connect(SocketAddress address) throws IOException {
         /*
-         * TODO Реализовать метод connect класса TcpSender
+         * Реализован метод connect класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        Socket socket = new Socket();
+        socket.connect(address);
+        return socket;
     }
 
     /**
@@ -76,9 +86,14 @@ public final class TcpSender {
      */
     private static void send(Socket socket, String message) throws IOException {
         /*
-         * TODO Реализовать метод send класса TcpSender
+         * Реализован метод send класса TcpSender
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        if (true) {
+            OutputStream stream = socket.getOutputStream();
+            PrintWriter writer = new PrintWriter(stream);
+            writer.println(message);
+            writer.flush();
+        };
     }
 
 }

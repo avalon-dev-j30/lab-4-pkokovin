@@ -1,8 +1,12 @@
 package ru.avalon.java.tcp;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 /**
  * Упражнение на выаботку умений связанных с получением сообщений,
@@ -14,7 +18,7 @@ public final class TcpReceiver {
 
     public static void main(String[] args) throws IOException {
         // 1. Определяем порт, на котором ожидается соединение.
-        final int port = 0;
+        final int port = 8080;
         // 2. Подготавливаем серверный сокет.
         final ServerSocket listener = prepareServerSocket(port);
         // 3. Принимаем соединение.
@@ -38,9 +42,15 @@ public final class TcpReceiver {
      */
     private static ServerSocket prepareServerSocket(int port) {
         /*
-         * TODO Реализовать метод prepareServerSocket класса TcpReceiver
+         * Реализован метод prepareServerSocket класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        ServerSocket socket = null;
+        try {
+            socket = new ServerSocket(port);
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        } 
+        return socket;
     }
 
     /**
@@ -51,11 +61,19 @@ public final class TcpReceiver {
      *
      * @return строковое сообщение.
      */
-    private static String receive(Socket socket) {
+    private static String receive(Socket socket) throws IOException {
         /*
-         * TODO Реализовать метод receive класса TcpReceiver
+         * Реализован метод receive класса TcpReceiver
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+        String received = "";
+        InputStream stream = socket.getInputStream();
+        while(received.isEmpty()) {
+        if(stream.available() > 0) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            received = reader.readLine();
+        }
+        }
+        return received;
     }
 
 }
